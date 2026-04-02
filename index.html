@@ -368,7 +368,7 @@
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp }                           from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut as fbSignOut, onAuthStateChanged }
                                                    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, doc, collection, addDoc, getDocs, deleteDoc, setDoc, onSnapshot, query, orderBy }
                                                    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
@@ -415,9 +415,12 @@ let viewMode = {year:now.getFullYear(), month:now.getMonth()};
 window.signIn = async () => {
   try {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
   } catch(e) { showToast('⚠️ Error al iniciar sesión'); }
 };
+
+// Manejar el resultado del redirect al volver
+getRedirectResult(auth).catch(e => console.log('redirect:', e));
 
 window.signOut = async () => {
   unsubscribers.forEach(u => u());
