@@ -420,7 +420,7 @@ window.signIn = async () => {
 };
 
 // Manejar el resultado del redirect al volver
-getRedirectResult(auth).catch(e => console.log('redirect:', e));
+
 
 window.signOut = async () => {
   unsubscribers.forEach(u => u());
